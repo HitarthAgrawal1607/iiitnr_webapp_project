@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Programs - Shadow Strike Fitness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #dc2626;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span:first-child {
+            font-size: 2rem;
+        }
+
+        .back-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(220, 38, 38, 0.2);
+            border: 2px solid #dc2626;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: glow 2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .page-title-emoji {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.8));
+        }
+        
+        .page-title-text {
+            background: linear-gradient(45deg, #ff0000, #ff6b6b, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 0, 0, 0.8)); }
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: #ccc;
+            font-weight: 300;
+        }
+
+        .workout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .workout-card {
+            background: linear-gradient(135deg, rgba(30, 30, 50, 0.9), rgba(20, 20, 35, 0.9));
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 2px solid rgba(220, 38, 38, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .workout-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(220, 38, 38, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .workout-card:hover::before {
+            left: 100%;
+        }
+
+        .workout-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #dc2626;
+            box-shadow: 0 20px 50px rgba(220, 38, 38, 0.4);
+        }
+
+        .workout-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .workout-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .workout-description {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            flex-grow: 1;
+        }
+
+        .workout-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover {
+            background: rgba(220, 38, 38, 0.2);
+            transform: scale(1.05);
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #dc2626;
+        }
+
+        .exercises-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .exercises-title {
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .exercise-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exercise-item {
+            padding: 0.8rem 1.2rem;
+            background: rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            border-left: 3px solid #dc2626;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .exercise-item:hover {
+            background: rgba(220, 38, 38, 0.1);
+            transform: translateX(10px);
+        }
+
+        .exercise-number {
+            background: #dc2626;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .exercise-name {
+            flex: 1;
+            color: #fff;
+            font-size: 1.05rem;
+        }
+
+        .start-workout-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border: 2px solid #dc2626;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1.5rem;
+        }
+
+        .start-workout-btn:hover {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 4rem;
+        }
+
+        .footer-text {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .ninja-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #dc2626;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            opacity: 0.3;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.6; transform: scale(1.2) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .page-title { font-size: 2.5rem; }
+            .workout-grid { grid-template-columns: 1fr; }
+            .workout-details { grid-template-columns: 1fr; }
+            .nav-content { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ninja-stars">
+        <div class="star" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+        <div class="star" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
+        <div class="star" style="top: 70%; left: 10%; animation-delay: 2s;"></div>
+        <div class="star" style="top: 50%; left: 90%; animation-delay: 1.5s;"></div>
+        <div class="star" style="top: 85%; left: 45%; animation-delay: 0.5s;"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <span>🥷</span>
+                <span>Shadow Strike Fitness</span>
+            </a>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">
+                <span class="page-title-emoji">⚔️</span>
+                <span class="page-title-text">Training Programs</span>
+            </h1>
+            <p class="page-subtitle">Choose Your Path to Mastery</p>
+        </div>
+
+        <div class="workout-grid">
+            <div class="workout-card">
+                <div class="workout-icon">🗡️</div>
+                <h3 class="workout-title">Shadow Warrior</h3>
+                <p class="workout-description">Master the art of bodyweight control with dynamic movements that build explosive power and stealth-like agility. This advanced program pushes your limits through high-intensity exercises.</p>
+                <div class="workout-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">30 min</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Intensity</div>
+                        <div class="detail-value">High</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Level</div>
+                        <div class="detail-value">Advanced</div>
+                    </div>
+                </div>
+                <div class="exercises-section">
+                    <h4 class="exercises-title">📋 Exercise Routine</h4>
+                    <ul class="exercise-list">
+                        <li class="exercise-item">
+                            <span class="exercise-number">1</span>
+                            <span class="exercise-name">Explosive Push-ups - 4 sets x 15 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">2</span>
+                            <span class="exercise-name">Jump Squats - 4 sets x 20 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">3</span>
+                            <span class="exercise-name">Burpees - 3 sets x 15 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">4</span>
+                            <span class="exercise-name">Mountain Climbers - 3 sets x 30 sec</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">5</span>
+                            <span class="exercise-name">Plank to Pike - 3 sets x 12 reps</span>
+                        </li>
+                    </ul>
+                </div>
+                <button class="start-workout-btn" onclick="startWorkout('Shadow Warrior')">Start Training</button>
+            </div>
+
+            <div class="workout-card">
+                <div class="workout-icon">🎯</div>
+                <h3 class="workout-title">Silent Assassin</h3>
+                <p class="workout-description">Focus on precision and control with targeted exercises that enhance flexibility, balance, and core strength. Perfect for building a solid foundation while improving body awareness.</p>
+                <div class="workout-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">25 min</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Intensity</div>
+                        <div class="detail-value">Medium</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Level</div>
+                        <div class="detail-value">Inter.</div>
+                    </div>
+                </div>
+                <div class="exercises-section">
+                    <h4 class="exercises-title">📋 Exercise Routine</h4>
+                    <ul class="exercise-list">
+                        <li class="exercise-item">
+                            <span class="exercise-number">1</span>
+                            <span class="exercise-name">Single Leg Deadlifts - 3 sets x 12 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">2</span>
+                            <span class="exercise-name">Archer Push-ups - 3 sets x 10 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">3</span>
+                            <span class="exercise-name">Side Plank - 3 sets x 45 sec each</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">4</span>
+                            <span class="exercise-name">Bulgarian Split Squats - 3 sets x 12 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">5</span>
+                            <span class="exercise-name">Hollow Body Hold - 3 sets x 30 sec</span>
+                        </li>
+                    </ul>
+                </div>
+                <button class="start-workout-btn" onclick="startWorkout('Silent Assassin')">Start Training</button>
+            </div>
+
+            <div class="workout-card">
+                <div class="workout-icon">⚡</div>
+                <h3 class="workout-title">Lightning Strike</h3>
+                <p class="workout-description">High-intensity interval training designed to maximize speed, endurance, and cardiovascular performance. Push through the pain barrier and unlock your true potential.</p>
+                <div class="workout-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">20 min</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Intensity</div>
+                        <div class="detail-value">Extreme</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Level</div>
+                        <div class="detail-value">Expert</div>
+                    </div>
+                </div>
+                <div class="exercises-section">
+                    <h4 class="exercises-title">📋 Exercise Routine</h4>
+                    <ul class="exercise-list">
+                        <li class="exercise-item">
+                            <span class="exercise-number">1</span>
+                            <span class="exercise-name">High Knees - 45 sec on / 15 sec rest x 4</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">2</span>
+                            <span class="exercise-name">Box Jumps - 40 sec on / 20 sec rest x 4</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">3</span>
+                            <span class="exercise-name">Sprint in Place - 30 sec all-out x 6</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">4</span>
+                            <span class="exercise-name">Tuck Jumps - 30 sec on / 30 sec rest x 4</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">5</span>
+                            <span class="exercise-name">Burpee Box Jumps - 20 sec x 5 rounds</span>
+                        </li>
+                    </ul>
+                </div>
+                <button class="start-workout-btn" onclick="startWorkout('Lightning Strike')">Start Training</button>
+            </div>
+
+            <div class="workout-card">
+                <div class="workout-icon">🌙</div>
+                <h3 class="workout-title">Moonlight Flow</h3>
+                <p class="workout-description">Gentle yet powerful movements that combine yoga-inspired flexibility with ninja-level body awareness. Perfect for recovery days or building foundational strength.</p>
+                <div class="workout-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">35 min</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Intensity</div>
+                        <div class="detail-value">Low</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Level</div>
+                        <div class="detail-value">Beginner</div>
+                    </div>
+                </div>
+                <div class="exercises-section">
+                    <h4 class="exercises-title">📋 Exercise Routine</h4>
+                    <ul class="exercise-list">
+                        <li class="exercise-item">
+                            <span class="exercise-number">1</span>
+                            <span class="exercise-name">Cat-Cow Stretch - 3 sets x 10 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">2</span>
+                            <span class="exercise-name">Warrior Pose Flow - 3 sets x 1 min each</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">3</span>
+                            <span class="exercise-name">Bridge Pose - 3 sets x 45 sec</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">4</span>
+                            <span class="exercise-name">Child's Pose to Cobra - 3 sets x 12 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">5</span>
+                            <span class="exercise-name">Seated Spinal Twist - 2 sets x 1 min each</span>
+                        </li>
+                    </ul>
+                </div>
+                <button class="start-workout-btn" onclick="startWorkout('Moonlight Flow')">Start Training</button>
+            </div>
+
+            <div class="workout-card">
+                <div class="workout-icon">🔥</div>
+                <h3 class="workout-title">Inferno Protocol</h3>
+                <p class="workout-description">Push your limits with an intense full-body burn that tests mental fortitude and physical endurance. This challenging program separates the committed from the casual.</p>
+                <div class="workout-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">40 min</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Intensity</div>
+                        <div class="detail-value">High</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Level</div>
+                        <div class="detail-value">Advanced</div>
+                    </div>
+                </div>
+                <div class="exercises-section">
+                    <h4 class="exercises-title">📋 Exercise Routine</h4>
+                    <ul class="exercise-list">
+                        <li class="exercise-item">
+                            <span class="exercise-number">1</span>
+                            <span class="exercise-name">Pistol Squats - 4 sets x 8 reps each leg</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">2</span>
+                            <span class="exercise-name">Handstand Push-ups - 4 sets x 10 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">3</span>
+                            <span class="exercise-name">Muscle-ups - 4 sets x 6 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">4</span>
+                            <span class="exercise-name">Dragon Flags - 3 sets x 8 reps</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">5</span>
+                            <span class="exercise-name">Planche Progression - 3 sets x max hold</span>
+                        </li>
+                    </ul>
+                </div>
+                <button class="start-workout-btn" onclick="startWorkout('Inferno Protocol')">Start Training</button>
+            </div>
+
+            <div class="workout-card">
+                <div class="workout-icon">🎭</div>
+                <h3 class="workout-title">Shadow Clone</h3>
+                <p class="workout-description">Circuit training that challenges every muscle group with strategic rest periods for optimal performance. Versatile enough for all fitness levels with scaling options.</p>
+                <div class="workout-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">45 min</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Intensity</div>
+                        <div class="detail-value">Medium</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Level</div>
+                        <div class="detail-value">All</div>
+                    </div>
+                </div>
+                <div class="exercises-section">
+                    <h4 class="exercises-title">📋 Exercise Routine</h4>
+                    <ul class="exercise-list">
+                        <li class="exercise-item">
+                            <span class="exercise-number">1</span>
+                            <span class="exercise-name">Circuit Round 1 - Push-ups, Squats, Plank (1 min each)</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">2</span>
+                            <span class="exercise-name">Circuit Round 2 - Lunges, Dips, Leg Raises (1 min each)</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">3</span>
+                            <span class="exercise-name">Circuit Round 3 - Jumping Jacks, Pull-ups, Russian Twists</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">4</span>
+                            <span class="exercise-name">Active Recovery - Light Jog in Place (2 min)</span>
+                        </li>
+                        <li class="exercise-item">
+                            <span class="exercise-number">5</span>
+                            <span class="exercise-name">Repeat All Circuits x 3 Rounds</span>
+                        </li>
+                    </ul>
+                </div>
+                <button class="start-workout-btn" onclick="startWorkout('Shadow Clone')">Start Training</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-text">© 2025 Shadow Strike Fitness | Train in Silence, Strike with Power</p>
+    </footer>
+
+    <script>
+        // Workout exercises data with video tutorials
+        const workoutData = {
+            'Shadow Warrior': [
+                {
+                    name: 'Explosive Push-ups',
+                    reps: '4 sets x 15 reps',
+                    description: 'Push yourself up explosively so your hands leave the ground. Focus on controlled landing to protect your wrists.',
+                    video: 'https://www.youtube.com/embed/GZ4g2SFO_3M'
+                },
+                {
+                    name: 'Jump Squats',
+                    reps: '4 sets x 20 reps',
+                    description: 'Squat down then explode upward, landing softly. Keep your chest up and core engaged throughout.',
+                    video: 'https://www.youtube.com/embed/A-cFYWvaHr0'
+                },
+                {
+                    name: 'Burpees',
+                    reps: '3 sets x 15 reps',
+                    description: 'Full body movement: squat, plank, push-up, jump. Maintain steady breathing rhythm.',
+                    video: 'https://www.youtube.com/embed/dZgVxmf6jkA'
+                },
+                {
+                    name: 'Mountain Climbers',
+                    reps: '3 sets x 30 sec',
+                    description: 'Drive knees to chest alternately while holding plank position. Keep hips level and core tight.',
+                    video: 'https://www.youtube.com/embed/nmwgirgXLYM'
+                },
+                {
+                    name: 'Plank to Pike',
+                    reps: '3 sets x 12 reps',
+                    description: 'From plank, pike hips up into downward dog position. Control the movement both ways.',
+                    video: 'https://www.youtube.com/embed/LH5OsmYEcMo'
+                }
+            ],
+            'Silent Assassin': [
+                {
+                    name: 'Single Leg Deadlifts',
+                    reps: '3 sets x 12 reps',
+                    description: 'Balance on one leg while hinging at the hip. Keep back straight and focus on stability.',
+                    video: 'https://www.youtube.com/embed/oeNvSitWUmg'
+                },
+                {
+                    name: 'Archer Push-ups',
+                    reps: '3 sets x 10 reps',
+                    description: 'Wide push-up shifting weight to one side. Excellent for building unilateral strength.',
+                    video: 'https://www.youtube.com/embed/0oiXh9fErkk'
+                },
+                {
+                    name: 'Side Plank',
+                    reps: '3 sets x 45 sec each',
+                    description: 'Hold side plank with body in straight line. Engage obliques and maintain alignment.',
+                    video: 'https://www.youtube.com/embed/K2VljzCC4-g'
+                },
+                {
+                    name: 'Bulgarian Split Squats',
+                    reps: '3 sets x 12 reps',
+                    description: 'Rear foot elevated on bench, lower into lunge. Great for leg strength and balance.',
+                    video: 'https://www.youtube.com/embed/2C-uNgKwPLE'
+                },
+                {
+                    name: 'Hollow Body Hold',
+                    reps: '3 sets x 30 sec',
+                    description: 'Lay back with arms overhead, lift shoulders and legs. Core should be fully engaged.',
+                    video: 'https://www.youtube.com/embed/LlDNef_Ztsc'
+                }
+            ],
+            'Lightning Strike': [
+                {
+                    name: 'High Knees',
+                    reps: '45 sec on / 15 sec rest x 4',
+                    description: 'Drive knees up rapidly while pumping arms. Maximum intensity cardio exercise.',
+                    video: 'https://www.youtube.com/embed/8opcQdC-V-U'
+                },
+                {
+                    name: 'Box Jumps',
+                    reps: '40 sec on / 20 sec rest x 4',
+                    description: 'Jump onto elevated surface, land softly. Step down to reset. Build explosive power.',
+                    video: 'https://www.youtube.com/embed/NBY9-kTuHEk'
+                },
+                {
+                    name: 'Sprint in Place',
+                    reps: '30 sec all-out x 6',
+                    description: 'Run as fast as possible in place. Push yourself to maximum effort in intervals.',
+                    video: 'https://www.youtube.com/embed/hHegFBXAWzQ'
+                },
+                {
+                    name: 'Tuck Jumps',
+                    reps: '30 sec on / 30 sec rest x 4',
+                    description: 'Jump and bring knees to chest. Land softly and immediately repeat.',
+                    video: 'https://www.youtube.com/embed/Ups6Qe3qJCk'
+                },
+                {
+                    name: 'Burpee Box Jumps',
+                    reps: '20 sec x 5 rounds',
+                    description: 'Combine burpee with box jump for ultimate cardio challenge.',
+                    video: 'https://www.youtube.com/embed/4n8KJHKd8ZM'
+                }
+            ],
+            'Moonlight Flow': [
+                {
+                    name: 'Cat-Cow Stretch',
+                    reps: '3 sets x 10 reps',
+                    description: 'Alternate between arching and rounding spine. Perfect for spine mobility and flexibility.',
+                    video: 'https://www.youtube.com/embed/kqnua4rHVaMo'
+                },
+                {
+                    name: 'Warrior Pose Flow',
+                    reps: '3 sets x 1 min each',
+                    description: 'Flow through warrior poses building strength and flexibility. Focus on breath control.',
+                    video: 'https://www.youtube.com/embed/RnJbJC04CCY'
+                },
+                {
+                    name: 'Bridge Pose',
+                    reps: '3 sets x 45 sec',
+                    description: 'Lift hips while keeping shoulders grounded. Great for glutes and back strength.',
+                    video: 'https://www.youtube.com/embed/AVAXhy6pl7o'
+                },
+                {
+                    name: "Child's Pose to Cobra",
+                    reps: '3 sets x 12 reps',
+                    description: 'Flow between restful child pose and energizing cobra. Opens chest and stretches spine.',
+                    video: 'https://www.youtube.com/embed/mN7bRVHQ33s'
+                },
+                {
+                    name: 'Seated Spinal Twist',
+                    reps: '2 sets x 1 min each',
+                    description: 'Gentle spinal rotation while seated. Improves mobility and releases tension.',
+                    video: 'https://www.youtube.com/embed/hJuZ8NXL6_Y'
+                }
+            ],
+            'Inferno Protocol': [
+                {
+                    name: 'Pistol Squats',
+                    reps: '4 sets x 8 reps each leg',
+                    description: 'Single leg squat requiring extreme strength and balance. Progress gradually.',
+                    video: 'https://www.youtube.com/embed/qDcniqddTeE'
+                },
+                {
+                    name: 'Handstand Push-ups',
+                    reps: '4 sets x 10 reps',
+                    description: 'Inverted push-up against wall. Ultimate shoulder and core strength builder.',
+                    video: 'https://www.youtube.com/embed/tQhrk6WMcKw'
+                },
+                {
+                    name: 'Muscle-ups',
+                    reps: '4 sets x 6 reps',
+                    description: 'Transition from pull-up to dip in one movement. Advanced calisthenics skill.',
+                    video: 'https://www.youtube.com/embed/CBD1INSFaQU'
+                },
+                {
+                    name: 'Dragon Flags',
+                    reps: '3 sets x 8 reps',
+                    description: 'Core strength exercise popularized by Bruce Lee. Keep body straight throughout.',
+                    video: 'https://www.youtube.com/embed/moyFIvRrIC4'
+                },
+                {
+                    name: 'Planche Progression',
+                    reps: '3 sets x max hold',
+                    description: 'Hold body horizontal supported only by hands. Work on progression variations.',
+                    video: 'https://www.youtube.com/embed/QVw_toSTSUQ'
+                }
+            ],
+            'Shadow Clone': [
+                {
+                    name: 'Circuit Round 1',
+                    reps: 'Push-ups, Squats, Plank (1 min each)',
+                    description: 'Complete all three exercises back-to-back with minimal rest between.',
+                    video: 'https://www.youtube.com/embed/IODxDxX7oi4'
+                },
+                {
+                    name: 'Circuit Round 2',
+                    reps: 'Lunges, Dips, Leg Raises (1 min each)',
+                    description: 'Second circuit focusing on different muscle groups. Maintain good form.',
+                    video: 'https://www.youtube.com/embed/2pLT-olgUJs'
+                },
+                {
+                    name: 'Circuit Round 3',
+                    reps: 'Jumping Jacks, Pull-ups, Russian Twists',
+                    description: 'Final circuit combining cardio and strength. Push through fatigue.',
+                    video: 'https://www.youtube.com/embed/iZxDyv6Ckdo'
+                },
+                {
+                    name: 'Active Recovery',
+                    reps: 'Light Jog in Place (2 min)',
+                    description: 'Keep moving to maintain heart rate while allowing brief recovery.',
+                    video: 'https://www.youtube.com/embed/cbKkB3POqaY'
+                },
+                {
+                    name: 'Repeat Circuits',
+                    reps: 'Complete all circuits x 3 rounds',
+                    description: 'Go through all rounds three times for complete workout. Rest 2-3 minutes between rounds.',
+                    video: 'https://www.youtube.com/embed/ML6XLzajt6Y'
+                }
+            ]
+        };
+
+        let currentExerciseIndex = 0;
+        let currentWorkoutName = '';
+
+        function startWorkout(workoutName) {
+            currentWorkoutName = workoutName;
+            currentExerciseIndex = 0;
+            showExercise();
+        }
+
+        function showExercise() {
+            const exercises = workoutData[currentWorkoutName];
+            const exercise = exercises[currentExerciseIndex];
+            
+            const overlay = document.createElement('div');
+            overlay.id = 'workout-overlay';
+            overlay.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 9999; overflow-y: auto; backdrop-filter: blur(10px);">
+                    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+                        <div style="background: linear-gradient(135deg, rgba(30, 30, 50, 0.95), rgba(20, 20, 35, 0.95)); border: 3px solid #dc2626; border-radius: 30px; padding: 2.5rem; max-width: 900px; width: 100%; box-shadow: 0 20px 60px rgba(220, 38, 38, 0.6);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                                <h2 style="font-size: 2rem; color: #ff6b6b; text-transform: uppercase; margin: 0;">🥷 ${currentWorkoutName}</h2>
+                                <button onclick="closeWorkout()" style="background: rgba(220, 38, 38, 0.2); border: 2px solid #dc2626; color: #fff; padding: 0.5rem 1.5rem; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 1rem;">✕ Close</button>
+                            </div>
+                            
+                            <div style="background: rgba(220, 38, 38, 0.1); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; text-align: center;">
+                                <p style="color: #ff6b6b; font-size: 1rem; margin: 0;">Exercise ${currentExerciseIndex + 1} of ${exercises.length}</p>
+                            </div>
+
+                            <h3 style="font-size: 2rem; color: #fff; margin-bottom: 1rem; text-align: center;">${exercise.name}</h3>
+                            <p style="color: #dc2626; font-size: 1.3rem; font-weight: 700; text-align: center; margin-bottom: 2rem;">${exercise.reps}</p>
+                            
+                            <div style="aspect-ratio: 16/9; width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 2rem; border: 2px solid rgba(220, 38, 38, 0.3);">
+                                <iframe width="100%" height="100%" src="${exercise.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: block;"></iframe>
+                            </div>
+                            
+                            <div style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 15px; border-left: 4px solid #dc2626; margin-bottom: 2rem;">
+                                <p style="color: #fff; font-size: 1.1rem; line-height: 1.8; margin: 0;"><strong style="color: #ff6b6b;">💡 How to perform:</strong><br>${exercise.description}</p>
+                            </div>
+
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                ${currentExerciseIndex > 0 ? '<button onclick="previousExercise()" style="padding: 1rem 2rem; background: rgba(220, 38, 38, 0.2); border: 2px solid #dc2626; color: #fff; font-size: 1.1rem; font-weight: 700; border-radius: 10px; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease;">← Previous</button>' : ''}
+                                ${currentExerciseIndex < exercises.length - 1 ? '<button onclick="nextExercise()" style="padding: 1rem 2rem; background: #dc2626; border: 2px solid #dc2626; color: #fff; font-size: 1.1rem; font-weight: 700; border-radius: 10px; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease;">Next →</button>' : '<button onclick="completeWorkout()" style="padding: 1rem 2rem; background: #16a34a; border: 2px solid #16a34a; color: #fff; font-size: 1.1rem; font-weight: 700; border-radius: 10px; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease;">✓ Complete Workout</button>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function nextExercise() {
+            currentExerciseIndex++;
+            closeWorkout();
+            showExercise();
+        }
+
+        function previousExercise() {
+            currentExerciseIndex--;
+            closeWorkout();
+            showExercise();
+        }
+
+        function closeWorkout() {
+            const overlay = document.getElementById('workout-overlay');
+            if (overlay) {
+                overlay.remove();
+            }
+        }
+
+        function completeWorkout() {
+            closeWorkout();
+            alert(`🎉 Congratulations, Warrior!\n\nYou've completed the ${currentWorkoutName} training program!\n\nRemember to:\n✓ Cool down properly\n✓ Stretch all major muscle groups\n✓ Stay hydrated\n✓ Rest and recover\n\nGreat job! 🥷`);
+        }
+
+        // Add smooth entrance animation
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.workout-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.6s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1759947586522,
+    "date": "2025-10-08",
+    "type": "Breakfast",
+    "name": "roti",
+    "calories": 100,
+    "protein": 2,
+    "carbs": 40,
+    "fats": 4
+  },
+  {
+    "id": 1759947795475,
+    "date": "2025-10-08",
+    "type": "Breakfast",
+    "name": "roti",
+    "calories": 100,
+    "protein": 2,
+    "carbs": 40,
+    "fats": 4
+  },
+  {
+    "id": 1759947928933,
+    "date": "2025-10-08",
+    "type": "Breakfast",
+    "name": "roti",
+    "calories": 100,
+    "protein": 2,
+    "carbs": 40,
+    "fats": 4
+  },
+  {
+    "id": 1759948055035,
+    "date": "2025-10-08",
+    "type": "Breakfast",
+    "name": "roti",
+    "calories": 100,
+    "protein": 2,
+    "carbs": 40,
+    "fats": 4
+  }
+]

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - Beast Mode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 69, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 140, 0, 0.15) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(255, 69, 0, 0.03) 0px,
+                    transparent 2px,
+                    transparent 4px,
+                    rgba(255, 69, 0, 0.03) 6px
+                );
+            pointer-events: none;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border: 3px solid #ff4500;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 0 60px rgba(255, 69, 0, 0.4),
+                inset 0 0 60px rgba(0, 0, 0, 0.5);
+            max-width: 550px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .corner-accent {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #ff8c00;
+        }
+
+        .corner-accent.top-left {
+            top: 15px;
+            left: 15px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-accent.top-right {
+            top: 15px;
+            right: 15px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-accent.bottom-left {
+            bottom: 15px;
+            left: 15px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-accent.bottom-right {
+            bottom: 15px;
+            right: 15px;
+            border-left: none;
+            border-top: none;
+        }
+
+        h1 {
+            color: #ff4500;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 
+                0 0 10px rgba(255, 69, 0, 0.8),
+                0 0 20px rgba(255, 69, 0, 0.6),
+                0 0 30px rgba(255, 69, 0, 0.4),
+                3px 3px 0px rgba(0, 0, 0, 0.8);
+            animation: titleGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 
+                0 0 10px rgba(255, 69, 0, 0.8),
+                0 0 20px rgba(255, 69, 0, 0.6),
+                0 0 30px rgba(255, 69, 0, 0.4),
+                3px 3px 0px rgba(0, 0, 0, 0.8); }
+            50% { text-shadow: 
+                0 0 20px rgba(255, 69, 0, 1),
+                0 0 30px rgba(255, 69, 0, 0.8),
+                0 0 40px rgba(255, 69, 0, 0.6),
+                3px 3px 0px rgba(0, 0, 0, 0.8); }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ff8c00;
+            margin-bottom: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #ff8c00;
+            font-weight: 900;
+            margin-bottom: 12px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 18px 20px;
+            background: #0d0d0d;
+            border: 2px solid #333;
+            border-radius: 10px;
+            font-size: 20px;
+            color: #fff;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-family: 'Arial', sans-serif;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #ff4500;
+            box-shadow: 
+                0 0 20px rgba(255, 69, 0, 0.5),
+                inset 0 0 10px rgba(255, 69, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input[type="number"]::placeholder {
+            color: #555;
+        }
+
+        .unit-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 12px;
+        }
+
+        .unit-selector label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 10px 18px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 13px;
+            background: #0d0d0d;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .unit-selector label:hover {
+            border-color: #ff8c00;
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        .unit-selector input[type="radio"]:checked + span {
+            color: #ff4500;
+        }
+
+        .unit-selector input[type="radio"] {
+            accent-color: #ff4500;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 22px;
+            background: linear-gradient(145deg, #ff4500, #ff8c00);
+            color: #000;
+            border: 3px solid #ff8c00;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 
+                0 10px 30px rgba(255, 69, 0, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 15px 40px rgba(255, 69, 0, 0.7),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            border-color: #ff4500;
+        }
+
+        button:active {
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 40px;
+            padding: 35px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            position: relative;
+            border: 3px solid;
+        }
+
+        .result.show {
+            display: block;
+            animation: powerUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes powerUp {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-5deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .bmi-label {
+            font-size: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.9;
+        }
+
+        .bmi-value {
+            font-size: 90px;
+            font-weight: 900;
+            margin: 20px 0;
+            text-shadow: 
+                0 0 20px currentColor,
+                3px 3px 0px rgba(0, 0, 0, 0.8);
+            animation: numberPulse 2s infinite;
+        }
+
+        @keyframes numberPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .bmi-category {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .bmi-range {
+            margin-top: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.8;
+            opacity: 0.95;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .motivation-text {
+            margin-top: 25px;
+            font-size: 17px;
+            font-weight: 700;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.6;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .underweight {
+            background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
+            border-color: #4a90e2;
+            color: #4a90e2;
+            box-shadow: 
+                0 0 40px rgba(74, 144, 226, 0.6),
+                inset 0 0 40px rgba(74, 144, 226, 0.1);
+        }
+
+        .normal {
+            background: linear-gradient(145deg, #1a2e1a, #0f1e0f);
+            border-color: #00ff41;
+            color: #00ff41;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 65, 0.6),
+                inset 0 0 40px rgba(0, 255, 65, 0.1);
+        }
+
+        .overweight {
+            background: linear-gradient(145deg, #2e1a1a, #1e0f0f);
+            border-color: #ff6b35;
+            color: #ff6b35;
+            box-shadow: 
+                0 0 40px rgba(255, 107, 53, 0.6),
+                inset 0 0 40px rgba(255, 107, 53, 0.1);
+        }
+
+        .obese {
+            background: linear-gradient(145deg, #2e1a1a, #1e0f0f);
+            border-color: #ff0000;
+            color: #ff0000;
+            box-shadow: 
+                0 0 40px rgba(255, 0, 0, 0.6),
+                inset 0 0 40px rgba(255, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-top: 25px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: currentColor;
+            border-radius: 8px;
+            transition: width 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 0 20px currentColor;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: emojiFloat 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        @keyframes emojiFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .bmi-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding: 0 5px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .scale-item {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            opacity: 0.7;
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        .lightning {
+            position: absolute;
+            font-size: 20px;
+            animation: lightning 0.5s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes lightning {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="corner-accent top-left"></div>
+        <div class="corner-accent top-right"></div>
+        <div class="corner-accent bottom-left"></div>
+        <div class="corner-accent bottom-right"></div>
+        
+        <h1>⚡ BEAST MODE</h1>
+        <p class="subtitle">Dominate Your Fitness Goals</p>
+        
+        <div class="input-group">
+            <label for="weight">⚡ WEIGHT</label>
+            <div class="input-wrapper">
+                <input type="number" id="weight" placeholder="Enter weight" step="0.1" min="0">
+            </div>
+            <div class="unit-selector">
+                <label>
+                    <input type="radio" name="weight-unit" value="kg" checked>
+                    <span>KG</span>
+                </label>
+                <label>
+                    <input type="radio" name="weight-unit" value="lbs">
+                    <span>LBS</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="height">⚡ HEIGHT</label>
+            <div class="input-wrapper">
+                <input type="number" id="height" placeholder="Enter height" step="0.01" min="0">
+            </div>
+            <div class="unit-selector">
+                <label>
+                    <input type="radio" name="height-unit" value="cm" checked>
+                    <span>CM</span>
+                </label>
+                <label>
+                    <input type="radio" name="height-unit" value="ft">
+                    <span>FEET</span>
+                </label>
+            </div>
+        </div>
+
+        <button onclick="calculateBMI()">🔥 CALCULATE NOW 🔥</button>
+
+        <div id="result" class="result">
+            <div class="emoji" id="emoji"></div>
+            <div class="bmi-label">YOUR POWER LEVEL</div>
+            <div class="bmi-value" id="bmi-value"></div>
+            <div class="bmi-category" id="bmi-category"></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="bmi-scale">
+                <div class="scale-item">UNDER<br>&lt;18.5</div>
+                <div class="scale-item">WARRIOR<br>18.5-24.9</div>
+                <div class="scale-item">HEAVY<br>25-29.9</div>
+                <div class="scale-item">TITAN<br>30+</div>
+            </div>
+            <div class="bmi-range" id="bmi-range"></div>
+            <div class="motivation-text" id="motivation"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const weightUnit = document.querySelector('input[name="weight-unit"]:checked').value;
+            const heightUnit = document.querySelector('input[name="height-unit"]:checked').value;
+
+            if (!weight || !height || weight <= 0 || height <= 0) {
+                alert('⚠️ ENTER VALID STATS, WARRIOR!');
+                return;
+            }
+
+            let weightKg = weight;
+            let heightM = height;
+
+            if (weightUnit === 'lbs') {
+                weightKg = weight * 0.453592;
+            }
+
+            if (heightUnit === 'cm') {
+                heightM = height / 100;
+            } else if (heightUnit === 'ft') {
+                heightM = height * 0.3048;
+            }
+
+            const bmi = weightKg / (heightM * heightM);
+            const bmiRounded = bmi.toFixed(1);
+
+            let category = '';
+            let categoryClass = '';
+            let range = '';
+            let motivation = '';
+            let emoji = '';
+            let progress = 0;
+
+            if (bmi < 18.5) {
+                category = 'LIGHTWEIGHT';
+                categoryClass = 'underweight';
+                range = 'WARRIOR RANGE: 18.5 - 24.9';
+                motivation = '💪 TIME TO BULK UP, CHAMP! Hit the weights, load up on protein, and build that muscle mass. You\'ve got this!';
+                emoji = '🏋️';
+                progress = (bmi / 18.5) * 25;
+            } else if (bmi >= 18.5 && bmi < 25) {
+                category = 'WARRIOR STATUS';
+                categoryClass = 'normal';
+                range = '🔥 YOU\'RE IN THE ZONE, BEAST!';
+                motivation = '💯 ABSOLUTE LEGEND! Your dedication is paying off. Keep crushing those goals and stay dominant!';
+                emoji = '💪';
+                progress = 25 + ((bmi - 18.5) / (25 - 18.5)) * 25;
+            } else if (bmi >= 25 && bmi < 30) {
+                category = 'HEAVYWEIGHT';
+                categoryClass = 'overweight';
+                range = 'WARRIOR RANGE: 18.5 - 24.9';
+                motivation = '⚡ TIME TO SHRED, BROTHER! Hit that cardio, dial in the nutrition, and unleash the beast within. Let\'s go!';
+                emoji = '🔥';
+                progress = 50 + ((bmi - 25) / (30 - 25)) * 25;
+            } else {
+                category = 'TITAN CLASS';
+                categoryClass = 'obese';
+                range = 'WARRIOR RANGE: 18.5 - 24.9';
+                motivation = '🚀 IT\'S GO TIME, WARRIOR! Every champion starts somewhere. Get a coach, build your plan, and transform into the legend you\'re meant to be!';
+                emoji = '⚡';
+                progress = 75 + Math.min(((bmi - 30) / 10) * 25, 25);
+            }
+
+            const resultDiv = document.getElementById('result');
+            document.getElementById('bmi-value').textContent = bmiRounded;
+            document.getElementById('bmi-category').textContent = category;
+            document.getElementById('bmi-range').textContent = range;
+            document.getElementById('motivation').textContent = motivation;
+            document.getElementById('emoji').textContent = emoji;
+            
+            setTimeout(() => {
+                document.getElementById('progress-fill').style.width = progress + '%';
+            }, 100);
+
+            resultDiv.className = 'result show ' + categoryClass;
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        document.getElementById('weight').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateBMI();
+        });
+
+        document.getElementById('height').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateBMI();
+        });
+
+        const inputs = document.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
