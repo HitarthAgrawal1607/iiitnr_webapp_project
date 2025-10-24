@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    /* Global */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #0f172a, #1e293b, #0f172a);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* Animated Gradient Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(#06b6d4, #3b82f6, #8b5cf6, #06b6d4);
+      animation: spin 15s linear infinite;
+      z-index: -2;
+      opacity: 0.15;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Glass Navbar */
+    header {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: center;
+      z-index: 10;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+    header h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-top: 120px;
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 1.2s ease;
+    }
+    .hero h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      color: #cbd5e1;
+      font-size: 1.2rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card Grid */
+    nav {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 30px;
+      max-width: 1000px;
+      width: 90%;
+      margin: 60px auto;
+    }
+    nav a:nth-child(1) {
+      grid-column: 1 / 4;
+    }
+    nav a:nth-child(2) {
+      grid-column: 4 / 7;
+    }
+    nav a:nth-child(3),
+    nav a:nth-child(4),
+    nav a:nth-child(5) {
+      grid-column: span 2;
+    }
+    @media (max-width: 768px) {
+      nav {
+        grid-template-columns: 1fr;
+      }
+      nav a {
+        grid-column: 1 !important;
+      }
+      header h1 {
+        font-size: 1.3rem;
+      }
+      .user-info {
+        position: static !important;
+        margin-top: 10px;
+        justify-content: center;
+      }
+    }
+    nav a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      padding: 30px 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      perspective: 1000px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    nav a:hover::before {
+      left: 100%;
+    }
+
+    nav a:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 12px 35px rgba(255,107,53,0.7);
+    }
+
+    /* Emoji Icon Styling */
+    nav a span {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+    }
+
+    /* Footer */
+    footer {
+      margin: 40px 0;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+    footer span {
+      color: #3b82f6;
+      font-weight: 600;
+    }
+
+    /* User Info & Logout */
+    .user-info {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    #usernameDisplay {
+      color: #06b6d4;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <h1>🏋️ Wellness Wave</h1>
+    <div class="user-info">
+      <span id="usernameDisplay"></span>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Transform Your Body, Track Your Journey</h2>
+    <p>Choose a section to begin — workouts, nutrition, and progress tracking all in one place.</p>
+  </section>
+
+  <!-- Navigation Cards -->
+  <nav>
+    <a href="home.html">
+      <span>🏠</span>
+      Home Workout
+    </a>
+    <a href="gym.html">
+      <span>🏋️‍♂️</span>
+      Gym Workout
+    </a>
+    <a href="progress.html">
+      <span>💪</span>
+      Weight Tracker
+    </a>
+    <a href="diet.html">
+      <span>🥗</span>
+      Diet Plan
+    </a>
+    <a href="bmi.html">
+      <span>⚖️</span>
+      BMI Calculator
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <footer>
+    Built with <span>passion</span> 💙 | Stay consistent 💪
+  </footer>
+
+  <script>
+    async function checkAuth() {
+      try {
+        const response = await fetch('/api/auth/status', {
+          credentials: 'include'
+        });
+        const data = await response.json();
+        
+        if (!data.authenticated) {
+          window.location.href = '/login.html';
+        } else {
+          document.getElementById('usernameDisplay').textContent = `👤 ${data.user.username}`;
+        }
+      } catch (error) {
+        window.location.href = '/login.html';
+      }
+    }
+
+    async function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        try {
+          await fetch('/api/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+          });
+          window.location.href = '/login.html';
+        } catch (error) {
+          alert('Logout failed');
+        }
+      }
+    }
+
+    checkAuth();
+  </script>
+</body>
+</html>

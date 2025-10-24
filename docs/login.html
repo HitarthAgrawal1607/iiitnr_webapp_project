@@ -324,7 +324,7 @@
         if (response.ok) {
           showSuccess('Login successful! Redirecting...');
           setTimeout(() => {
-            window.location.href = '/index.html';
+            window.location.href = '/face.html';
           }, 1000);
         } else {
           showError(data.error || 'Login failed');
@@ -384,7 +384,7 @@
         const data = await response.json();
         
         if (data.authenticated) {
-          window.location.href = '/index.html';
+          window.location.href = '/face.html';
         }
       } catch (error) {
         console.log('Not authenticated');
