@@ -18,7 +18,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('docs'));
 app.use(session({
   secret: 'fitness-warrior-secret-key-2024',
   resave: false,
