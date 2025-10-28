@@ -489,14 +489,6 @@
                     <button class="btn flex-1" onclick="next()">${idx === t - 1 ? 'Complete Session' : 'Next Exercise →'}</button>
                 </div>
             `;
-            
-            // Scroll to the exercise section smoothly
-            setTimeout(() => {
-                const target = document.getElementById('exercise-top');
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 100);
         }
 
         function next() {
