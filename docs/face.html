@@ -215,9 +215,299 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6);
     }
+
+    /* Chatbot Toggle Button - RED/ORANGE THEME */
+    .chatbot-toggle {
+      position: fixed;
+      top: 100px;
+      left: 40px;
+      z-index: 1000;
+      background: linear-gradient(135deg, #ff6b35, #f59e0b, #ef4444);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(255, 107, 53, 0.6);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 40px rgba(255, 107, 53, 0.8);
+    }
+
+    /* Chatbot Window - RED/ORANGE THEME */
+    .chatbot-window {
+      position: fixed;
+      top: 170px;
+      left: 40px;
+      z-index: 999;
+      width: 400px;
+      height: 550px;
+      background: linear-gradient(135deg, rgba(30, 30, 50, 0.98), rgba(20, 20, 35, 0.98));
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 107, 53, 0.4);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideIn 0.3s ease;
+    }
+
+    .chatbot-window.active {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Chatbot Header - RED/ORANGE GRADIENT */
+    .chatbot-header {
+      background: linear-gradient(135deg, #ff6b35, #f59e0b);
+      padding: 20px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Messages Container */
+    .chatbot-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-thumb {
+      background: rgba(255, 107, 53, 0.5);
+      border-radius: 10px;
+    }
+
+    /* Message Bubbles */
+    .message {
+      display: flex;
+      animation: messageIn 0.3s ease;
+    }
+
+    @keyframes messageIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message.bot {
+      justify-content: flex-start;
+    }
+
+    .message-bubble {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .message.user .message-bubble {
+      background: linear-gradient(135deg, #ff6b35, #ef4444);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+    }
+
+    .message.bot .message-bubble {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e5e5e5;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Loading Indicator */
+    .loading-message {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      max-width: 80%;
+      color: #cbd5e1;
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .loading-dots span {
+      width: 8px;
+      height: 8px;
+      background: #ff6b35;
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out both;
+    }
+
+    .loading-dots span:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% {
+        transform: scale(0);
+      }
+      40% {
+        transform: scale(1);
+      }
+    }
+
+    /* Input Area */
+    .chatbot-input-area {
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      gap: 10px;
+    }
+
+    .chatbot-input {
+      flex: 1;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      font-size: 0.95rem;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-input:focus {
+      outline: none;
+      border-color: #ff6b35;
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+    }
+
+    .chatbot-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .chatbot-send-btn {
+      padding: 14px 18px;
+      background: linear-gradient(135deg, #ff6b35, #f59e0b);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+      font-size: 1.2rem;
+    }
+
+    .chatbot-send-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+    }
+
+    .chatbot-send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Mobile Responsive for Chatbot */
+    @media (max-width: 768px) {
+      .chatbot-toggle {
+        left: 20px;
+        top: 90px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+
+      .chatbot-window {
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        max-width: 400px;
+        top: 150px;
+      }
+
+      .chatbot-window.active {
+        transform: translateX(-50%);
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Chatbot Toggle Button -->
+  <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+    💬
+  </button>
+
+  <!-- Chatbot Window -->
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <span>🍎</span>
+      <span>Nutrition Assistant</span>
+    </div>
+    
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="message bot">
+        <div class="message-bubble">Hi! I'm your nutrition assistant. Ask me about the nutritional value of any food! 🥗
+
+Try asking: "apple", "chicken breast", "banana", "salmon", etc.</div>
+      </div>
+    </div>
+    
+    <div class="chatbot-input-area">
+      <input 
+        type="text" 
+        class="chatbot-input" 
+        id="chatbotInput" 
+        placeholder="Ask about any food..."
+        onkeypress="handleKeyPress(event)"
+      />
+      <button class="chatbot-send-btn" id="chatbotSend" onclick="sendMessage()">
+        ➤
+      </button>
+    </div>
+  </div>
+
   <!-- Navbar -->
   <header>
     <h1>🏋️ Wellness Wave</h1>
@@ -295,6 +585,232 @@
     }
 
     checkAuth();
+
+    // Nutrition Database - Expanded with Indian Foods & More
+    const nutritionDB = {
+      // Fruits
+      'apple': { name: 'Apple', serving: '1 medium (182g)', calories: 95, protein: 0.5, carbs: 25, fats: 0.3, fiber: 4.4, vitamins: 'Vitamin C (14% DV), Vitamin K' },
+      'banana': { name: 'Banana', serving: '1 medium (118g)', calories: 105, protein: 1.3, carbs: 27, fats: 0.4, fiber: 3.1, vitamins: 'Vitamin C, Vitamin B6, Potassium' },
+      'orange': { name: 'Orange', serving: '1 medium (131g)', calories: 62, protein: 1.2, carbs: 15, fats: 0.2, fiber: 3.1, vitamins: 'Vitamin C (116% DV), Folate' },
+      'strawberry': { name: 'Strawberries', serving: '1 cup (152g)', calories: 49, protein: 1, carbs: 12, fats: 0.5, fiber: 3, vitamins: 'Vitamin C (149% DV), Manganese' },
+      'grapes': { name: 'Grapes', serving: '1 cup (151g)', calories: 104, protein: 1.1, carbs: 27, fats: 0.2, fiber: 1.4, vitamins: 'Vitamin K, Vitamin C' },
+      'mango': { name: 'Mango', serving: '1 cup diced (165g)', calories: 99, protein: 1.4, carbs: 25, fats: 0.6, fiber: 2.6, vitamins: 'Vitamin C (67% DV), Vitamin A' },
+      'papaya': { name: 'Papaya', serving: '1 cup (140g)', calories: 55, protein: 0.9, carbs: 14, fats: 0.2, fiber: 2.5, vitamins: 'Vitamin C (144% DV), Folate' },
+      'watermelon': { name: 'Watermelon', serving: '1 cup (152g)', calories: 46, protein: 0.9, carbs: 11, fats: 0.2, fiber: 0.6, vitamins: 'Vitamin C, Vitamin A, Lycopene' },
+      'guava': { name: 'Guava', serving: '1 fruit (55g)', calories: 37, protein: 1.4, carbs: 8, fats: 0.5, fiber: 3, vitamins: 'Vitamin C (228% DV), Fiber' },
+      
+      // Proteins
+      'chicken breast': { name: 'Chicken Breast', serving: '100g cooked', calories: 165, protein: 31, carbs: 0, fats: 3.6, fiber: 0, vitamins: 'Vitamin B6, Niacin, Selenium' },
+      'chicken': { name: 'Chicken Breast', serving: '100g cooked', calories: 165, protein: 31, carbs: 0, fats: 3.6, fiber: 0, vitamins: 'Vitamin B6, Niacin, Selenium' },
+      'salmon': { name: 'Salmon', serving: '100g cooked', calories: 206, protein: 22, carbs: 0, fats: 13, fiber: 0, vitamins: 'Omega-3, Vitamin D, B12' },
+      'eggs': { name: 'Eggs', serving: '2 large eggs', calories: 143, protein: 12.6, carbs: 0.7, fats: 9.5, fiber: 0, vitamins: 'Vitamin B12, Vitamin D, Choline' },
+      'egg': { name: 'Eggs', serving: '2 large eggs', calories: 143, protein: 12.6, carbs: 0.7, fats: 9.5, fiber: 0, vitamins: 'Vitamin B12, Vitamin D, Choline' },
+      'beef': { name: 'Beef', serving: '100g cooked', calories: 250, protein: 26, carbs: 0, fats: 15, fiber: 0, vitamins: 'Iron, Zinc, B12' },
+      'tuna': { name: 'Tuna', serving: '100g canned', calories: 116, protein: 26, carbs: 0, fats: 0.8, fiber: 0, vitamins: 'Vitamin D, B12, Selenium' },
+      'fish': { name: 'Fish (White)', serving: '100g cooked', calories: 145, protein: 27, carbs: 0, fats: 3, fiber: 0, vitamins: 'Vitamin B12, Selenium, Omega-3' },
+      'paneer': { name: 'Paneer', serving: '100g', calories: 265, protein: 18, carbs: 3, fats: 20, fiber: 0, vitamins: 'Calcium (200mg), Protein, Vitamin A' },
+      'tofu': { name: 'Tofu', serving: '100g', calories: 76, protein: 8, carbs: 1.9, fats: 4.8, fiber: 0.3, vitamins: 'Calcium, Iron, Magnesium' },
+      'chickpeas': { name: 'Chickpeas', serving: '1 cup cooked (164g)', calories: 269, protein: 14.5, carbs: 45, fats: 4.3, fiber: 12.5, vitamins: 'Folate, Iron, Manganese' },
+      'lentils': { name: 'Lentils (Dal)', serving: '1 cup cooked (198g)', calories: 230, protein: 18, carbs: 40, fats: 0.8, fiber: 15.6, vitamins: 'Folate, Iron, Potassium' },
+      'dal': { name: 'Lentils (Dal)', serving: '1 cup cooked (198g)', calories: 230, protein: 18, carbs: 40, fats: 0.8, fiber: 15.6, vitamins: 'Folate, Iron, Potassium' },
+      
+      // Vegetables
+      'broccoli': { name: 'Broccoli', serving: '1 cup (91g)', calories: 31, protein: 2.5, carbs: 6, fats: 0.3, fiber: 2.4, vitamins: 'Vitamin C (135% DV), Vitamin K' },
+      'spinach': { name: 'Spinach', serving: '1 cup raw (30g)', calories: 7, protein: 0.9, carbs: 1.1, fats: 0.1, fiber: 0.7, vitamins: 'Vitamin K (181% DV), Iron' },
+      'carrot': { name: 'Carrots', serving: '1 medium (61g)', calories: 25, protein: 0.6, carbs: 6, fats: 0.1, fiber: 1.7, vitamins: 'Vitamin A (184% DV), Beta-carotene' },
+      'tomato': { name: 'Tomato', serving: '1 medium (123g)', calories: 22, protein: 1.1, carbs: 4.8, fats: 0.2, fiber: 1.5, vitamins: 'Vitamin C, Lycopene' },
+      'potato': { name: 'Potato', serving: '1 medium boiled (173g)', calories: 164, protein: 3.8, carbs: 37, fats: 0.2, fiber: 2.4, vitamins: 'Vitamin C, Potassium, B6' },
+      'aloo': { name: 'Potato (Aloo)', serving: '1 medium boiled (173g)', calories: 164, protein: 3.8, carbs: 37, fats: 0.2, fiber: 2.4, vitamins: 'Vitamin C, Potassium, B6' },
+      'cauliflower': { name: 'Cauliflower', serving: '1 cup (107g)', calories: 27, protein: 2, carbs: 5, fats: 0.3, fiber: 2.1, vitamins: 'Vitamin C (77% DV), Vitamin K' },
+      'gobi': { name: 'Cauliflower (Gobi)', serving: '1 cup (107g)', calories: 27, protein: 2, carbs: 5, fats: 0.3, fiber: 2.1, vitamins: 'Vitamin C (77% DV), Vitamin K' },
+      
+      // Indian Breads
+      'roti': { name: 'Roti (Chapati)', serving: '1 medium (60g)', calories: 120, protein: 3.5, carbs: 25, fats: 1.2, fiber: 2.5, vitamins: 'Iron, B vitamins, Fiber' },
+      'chapati': { name: 'Chapati (Roti)', serving: '1 medium (60g)', calories: 120, protein: 3.5, carbs: 25, fats: 1.2, fiber: 2.5, vitamins: 'Iron, B vitamins, Fiber' },
+      'paratha': { name: 'Paratha (Plain)', serving: '1 medium (80g)', calories: 230, protein: 4.5, carbs: 32, fats: 9, fiber: 2, vitamins: 'Carbohydrates, B vitamins' },
+      'naan': { name: 'Naan', serving: '1 piece (90g)', calories: 262, protein: 7.6, carbs: 45, fats: 5.4, fiber: 2, vitamins: 'Selenium, Thiamine' },
+      'puri': { name: 'Puri', serving: '1 piece (30g)', calories: 112, protein: 2, carbs: 14, fats: 5.5, fiber: 0.8, vitamins: 'Iron, Carbohydrates' },
+      'dosa': { name: 'Dosa (Plain)', serving: '1 medium (120g)', calories: 168, protein: 4, carbs: 32, fats: 2.5, fiber: 1.5, vitamins: 'Iron, B vitamins' },
+      'idli': { name: 'Idli', serving: '2 pieces (150g)', calories: 156, protein: 5, carbs: 30, fats: 1, fiber: 2, vitamins: 'Iron, Calcium, B vitamins' },
+      
+      // Indian Dishes
+      'biryani': { name: 'Chicken Biryani', serving: '1 cup (250g)', calories: 340, protein: 18, carbs: 42, fats: 10, fiber: 2, vitamins: 'Protein, Iron, B vitamins' },
+      'curry': { name: 'Chicken Curry', serving: '1 cup (250g)', calories: 280, protein: 22, carbs: 12, fats: 16, fiber: 3, vitamins: 'Protein, Vitamin A, Iron' },
+      'butter chicken': { name: 'Butter Chicken', serving: '1 cup (250g)', calories: 438, protein: 24, carbs: 14, fats: 31, fiber: 2, vitamins: 'Protein, Vitamin A, Calcium' },
+      'palak paneer': { name: 'Palak Paneer', serving: '1 cup (250g)', calories: 270, protein: 12, carbs: 10, fats: 20, fiber: 3, vitamins: 'Vitamin K, Iron, Calcium, Protein' },
+      'dal makhani': { name: 'Dal Makhani', serving: '1 cup (250g)', calories: 235, protein: 10, carbs: 28, fats: 9, fiber: 6, vitamins: 'Protein, Iron, Fiber' },
+      'chole': { name: 'Chole (Chickpea Curry)', serving: '1 cup (250g)', calories: 304, protein: 14, carbs: 45, fats: 7, fiber: 12, vitamins: 'Protein, Fiber, Iron' },
+      'rajma': { name: 'Rajma (Kidney Beans)', serving: '1 cup (250g)', calories: 268, protein: 15, carbs: 42, fats: 4, fiber: 13, vitamins: 'Protein, Fiber, Iron, Folate' },
+      'samosa': { name: 'Samosa', serving: '1 piece (50g)', calories: 150, protein: 3, carbs: 20, fats: 7, fiber: 2, vitamins: 'Carbohydrates, Iron' },
+      
+      // Grains & Rice
+      'rice': { name: 'White Rice', serving: '1 cup cooked (158g)', calories: 205, protein: 4.2, carbs: 45, fats: 0.4, fiber: 0.6, vitamins: 'Folate, Thiamine' },
+      'brown rice': { name: 'Brown Rice', serving: '1 cup cooked (195g)', calories: 216, protein: 5, carbs: 45, fats: 1.8, fiber: 3.5, vitamins: 'Manganese, Magnesium' },
+      'basmati rice': { name: 'Basmati Rice', serving: '1 cup cooked (158g)', calories: 191, protein: 4, carbs: 42, fats: 0.5, fiber: 0.7, vitamins: 'Iron, Folate' },
+      'oats': { name: 'Oatmeal', serving: '1 cup cooked (234g)', calories: 166, protein: 5.9, carbs: 28, fats: 3.6, fiber: 4, vitamins: 'Iron, Thiamine, Magnesium' },
+      'bread': { name: 'Whole Wheat Bread', serving: '1 slice (28g)', calories: 69, protein: 3.6, carbs: 12, fats: 0.9, fiber: 1.9, vitamins: 'Folate, Thiamine' },
+      'quinoa': { name: 'Quinoa', serving: '1 cup cooked (185g)', calories: 222, protein: 8, carbs: 39, fats: 3.6, fiber: 5, vitamins: 'Iron, Magnesium, B vitamins' },
+      
+      // Dairy
+      'milk': { name: 'Milk', serving: '1 cup (244g)', calories: 149, protein: 7.7, carbs: 12, fats: 7.9, fiber: 0, vitamins: 'Calcium (30% DV), Vitamin D' },
+      'yogurt': { name: 'Greek Yogurt', serving: '1 cup (170g)', calories: 100, protein: 17, carbs: 6, fats: 0.7, fiber: 0, vitamins: 'Calcium, Probiotics, B12' },
+      'dahi': { name: 'Dahi (Curd)', serving: '1 cup (244g)', calories: 98, protein: 11, carbs: 12, fats: 0.4, fiber: 0, vitamins: 'Calcium, Probiotics, Vitamin B12' },
+      'curd': { name: 'Curd (Dahi)', serving: '1 cup (244g)', calories: 98, protein: 11, carbs: 12, fats: 0.4, fiber: 0, vitamins: 'Calcium, Probiotics, Vitamin B12' },
+      'cheese': { name: 'Cheddar Cheese', serving: '1 oz (28g)', calories: 114, protein: 7, carbs: 0.4, fats: 9.4, fiber: 0, vitamins: 'Calcium, Vitamin A' },
+      'lassi': { name: 'Lassi (Plain)', serving: '1 glass (250ml)', calories: 143, protein: 6, carbs: 18, fats: 5, fiber: 0, vitamins: 'Calcium, Probiotics, Vitamin B12' },
+      
+      // Fast Food & Snacks
+      'burger': { name: 'Burger (Chicken)', serving: '1 burger (150g)', calories: 420, protein: 22, carbs: 38, fats: 19, fiber: 2, vitamins: 'Protein, Iron, B vitamins' },
+      'cheeseburger': { name: 'Cheeseburger', serving: '1 burger (160g)', calories: 535, protein: 25, carbs: 40, fats: 29, fiber: 2, vitamins: 'Protein, Calcium, Iron' },
+      'veg burger': { name: 'Veg Burger', serving: '1 burger (140g)', calories: 320, protein: 11, carbs: 45, fats: 11, fiber: 5, vitamins: 'Fiber, Iron, Vitamins' },
+      'pizza': { name: 'Cheese Pizza', serving: '1 slice (107g)', calories: 285, protein: 12, carbs: 36, fats: 10, fiber: 2.5, vitamins: 'Calcium, Protein' },
+      'fries': { name: 'French Fries', serving: '1 medium (117g)', calories: 365, protein: 4, carbs: 48, fats: 17, fiber: 4, vitamins: 'Potassium, Vitamin C' },
+      'pasta': { name: 'Pasta', serving: '1 cup cooked (140g)', calories: 221, protein: 8, carbs: 43, fats: 1.3, fiber: 2.5, vitamins: 'Folate, Iron' },
+      'sandwich': { name: 'Chicken Sandwich', serving: '1 sandwich (150g)', calories: 320, protein: 24, carbs: 35, fats: 9, fiber: 3, vitamins: 'Protein, Iron, B vitamins' },
+      'pakora': { name: 'Pakora', serving: '3 pieces (75g)', calories: 180, protein: 4, carbs: 22, fats: 8, fiber: 2, vitamins: 'Iron, Fiber' },
+      
+      // Nuts & Seeds
+      'avocado': { name: 'Avocado', serving: '1 medium (150g)', calories: 240, protein: 3, carbs: 13, fats: 22, fiber: 10, vitamins: 'Healthy fats, Potassium, Vitamin K' },
+      'almonds': { name: 'Almonds', serving: '1 oz (28g)', calories: 164, protein: 6, carbs: 6, fats: 14, fiber: 3.5, vitamins: 'Vitamin E, Magnesium' },
+      'cashews': { name: 'Cashews', serving: '1 oz (28g)', calories: 157, protein: 5, carbs: 9, fats: 12, fiber: 0.9, vitamins: 'Copper, Magnesium, Zinc' },
+      'peanuts': { name: 'Peanuts', serving: '1 oz (28g)', calories: 161, protein: 7, carbs: 5, fats: 14, fiber: 2.4, vitamins: 'Niacin, Folate, Vitamin E' },
+      'peanut butter': { name: 'Peanut Butter', serving: '2 tbsp (32g)', calories: 188, protein: 8, carbs: 7, fats: 16, fiber: 2, vitamins: 'Vitamin E, Magnesium, Niacin' },
+      'walnuts': { name: 'Walnuts', serving: '1 oz (28g)', calories: 185, protein: 4.3, carbs: 3.9, fats: 18.5, fiber: 1.9, vitamins: 'Omega-3, Copper, Manganese' }
+    };
+
+    // Chatbot Functions
+    let isLoading = false;
+
+    function toggleChatbot() {
+      const chatbotWindow = document.getElementById('chatbotWindow');
+      const chatbotToggle = document.getElementById('chatbotToggle');
+      
+      if (chatbotWindow.classList.contains('active')) {
+        chatbotWindow.classList.remove('active');
+        chatbotToggle.textContent = '💬';
+      } else {
+        chatbotWindow.classList.add('active');
+        chatbotToggle.textContent = '✕';
+      }
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    async function sendMessage() {
+      if (isLoading) return;
+      
+      const input = document.getElementById('chatbotInput');
+      const message = input.value.trim();
+      
+      if (!message) return;
+      
+      // Add user message
+      addMessage('user', message);
+      input.value = '';
+      
+      // Show loading
+      isLoading = true;
+      document.getElementById('chatbotSend').disabled = true;
+      showLoading();
+      
+      // Simulate thinking time
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Get nutrition info
+      const response = getNutritionInfo(message);
+      
+      // Remove loading and add bot response
+      removeLoading();
+      addMessage('bot', response);
+      
+      isLoading = false;
+      document.getElementById('chatbotSend').disabled = false;
+    }
+
+    function addMessage(type, text) {
+      const messagesContainer = document.getElementById('chatbotMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${type}`;
+      const textNode = document.createElement('div');
+      textNode.className = 'message-bubble';
+      textNode.textContent = text;
+      messageDiv.appendChild(textNode);
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function showLoading() {
+      const messagesContainer = document.getElementById('chatbotMessages');
+      const loadingDiv = document.createElement('div');
+      loadingDiv.className = 'message bot';
+      loadingDiv.id = 'loadingMessage';
+      loadingDiv.innerHTML = `
+        <div class="loading-message">
+          <span>Looking up nutrition...</span>
+          <div class="loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      `;
+      messagesContainer.appendChild(loadingDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function removeLoading() {
+      const loadingMessage = document.getElementById('loadingMessage');
+      if (loadingMessage) {
+        loadingMessage.remove();
+      }
+    }
+
+    function getNutritionInfo(food) {
+      const searchTerm = food.toLowerCase().trim();
+      
+      // Search for exact match or partial match
+      let foodData = nutritionDB[searchTerm];
+      
+      if (!foodData) {
+        // Try to find partial match
+        for (let key in nutritionDB) {
+          if (searchTerm.includes(key) || key.includes(searchTerm)) {
+            foodData = nutritionDB[key];
+            break;
+          }
+        }
+      }
+      
+      if (foodData) {
+        return `🍎 ${foodData.name}
+
+📏 Serving Size: ${foodData.serving}
+
+Nutrition Facts:
+🔥 Calories: ${foodData.calories} kcal
+💪 Protein: ${foodData.protein}g
+🌾 Carbs: ${foodData.carbs}g
+🥑 Fats: ${foodData.fats}g
+🌿 Fiber: ${foodData.fiber}g
+
+✨ Key Nutrients: ${foodData.vitamins}
+
+This is for a typical serving. Values may vary based on preparation method.`;
+      } else {
+        return `Sorry, I don't have nutritional information for "${food}" in my database yet. 
+
+Try asking about common foods like:
+• Fruits: apple, banana, orange
+• Proteins: chicken breast, salmon, eggs
+• Vegetables: broccoli, spinach, carrot
+• Grains: rice, oats, bread
+• Dairy: milk, yogurt, cheese`;
+      }
+    }
   </script>
 </body>
 </html>

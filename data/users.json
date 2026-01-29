@@ -12,5 +12,12 @@
     "email": "",
     "password": "$2b$10$4DHSUG.nm947fcg/TzHjhOY4xCJ/w5m7gLAbkZzKLyHDBEfU3NrDG",
     "createdAt": "2025-10-07T05:22:30.948Z"
+  },
+  {
+    "id": "1762628897577",
+    "username": "Human1",
+    "email": "",
+    "password": "$2b$10$YX4XBVh9Tz4Mj7dl0yXT5uFaEN6XpGFbsXAOJJiKkfrMhzYGxLTVS",
+    "createdAt": "2025-11-08T19:08:17.577Z"
   }
 ]
